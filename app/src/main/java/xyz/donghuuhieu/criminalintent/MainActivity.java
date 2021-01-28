@@ -1,23 +1,19 @@
 package xyz.donghuuhieu.criminalintent;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
 
 import java.util.UUID;
 
 public class MainActivity extends SingleFragmentActivity {
+    private static final String EXTRA_CRIME_ID = "xyz.donghuuhieu.criminalitent.crime_id";
+
     @Override
     protected Fragment createFragment() {
-        return new CrimeFragment();
+        return CrimeFragment.newInstance(getExtraCrimeId(getIntent()));
     }
-
-    public static final String EXTRA_CRIME_ID = "xyz.donghuuhieu.criminalitent.crime_id";
 
     public static Intent newIntent(Context context, UUID crimeId) {
         Intent intent = new Intent(context, MainActivity.class);
