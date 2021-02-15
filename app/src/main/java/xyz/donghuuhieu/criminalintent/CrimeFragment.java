@@ -32,7 +32,7 @@ public class CrimeFragment extends Fragment {
     private static final int REQUEST_DATE = 0;
 
     public static CrimeFragment newInstance(UUID crimeId) {
-        
+
         Bundle args = new Bundle();
         args.putSerializable(ARG_CRIME_ID, crimeId);
         
@@ -40,7 +40,15 @@ public class CrimeFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        CrimeLab.get(getActivity())
+                .updateCrime(mCrime);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
