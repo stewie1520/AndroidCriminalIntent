@@ -43,32 +43,25 @@ public class CrimeLab {
 
         List<Crime> crimes = new ArrayList<>();
 
-        CrimeCursorWrapper cursor = queryCrimes(null, null);
-
-        try {
+        try (CrimeCursorWrapper cursor = queryCrimes(null, null)) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 crimes.add(cursor.getCrime());
                 cursor.moveToNext();
             }
-        } finally {
-            cursor.close();
         }
 
         return crimes;
     }
 
     public Crime getCrime(UUID id) {
-        CrimeCursorWrapper cursor = queryCrimes(CrimeTable.Cols.UUID + " = ?", new String[] { id.toString() });
-        try {
+        try (CrimeCursorWrapper cursor = queryCrimes(CrimeTable.Cols.UUID + " = ?", new String[]{id.toString()})) {
             if (cursor.getCount() == 0) {
                 return null;
             }
 
             cursor.moveToFirst();
             return cursor.getCrime();
-        } finally {
-            cursor.close();
         }
     }
 
